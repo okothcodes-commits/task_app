@@ -3,28 +3,31 @@
 from datetime import datetime
 
 
-def validate_task_title(title: str) -> tuple[bool, str]:
+def validate_task_title(title: str) -> bool:
+    """Validates that the title is a non-empty string."""
     if not isinstance(title, str) or not title.strip():
-        return False, "Title cannot be empty."
-    if len(title.strip()) < 3:
-        return False, "Title must be at least 3 characters long."
-    return True, ""
+        raise ValueError("Task title cannot be empty.")
+    return True
 
 
-def validate_task_description(description: str) -> tuple[bool, str]:
+def validate_task_description(description: str) -> bool:
+    """Validates description presence and length limit."""
     if not isinstance(description, str) or not description.strip():
-        return False, "Description cannot be empty."
-    return True, ""
+        raise ValueError("Task description cannot be empty.")
+
+    if len(description) > 500:
+        raise ValueError("Task description cannot exceed 500 characters.")
+
+    return True
 
 
-def validate_due_date(due_date_str: str) -> tuple[bool, str]:
+def validate_due_date(due_date_str: str) -> bool:
+    """Validates that due date matches YYYY-MM-DD format."""
     if not isinstance(due_date_str, str) or not due_date_str.strip():
-        return False, "Due date cannot be empty."
+        raise ValueError("Due date cannot be empty.")
+
     try:
         datetime.strptime(due_date_str.strip(), "%Y-%m-%d")
-        return True, ""
+        return True
     except ValueError:
-        return (
-            False,
-            f"Invalid date '{due_date_str}'. Use YYYY-MM-DD (e.g., 2026-10-15).",
-        )
+        raise ValueError("Due date must be in YYYY-MM-DD format.")
