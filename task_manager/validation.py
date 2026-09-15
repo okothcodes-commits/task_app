@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 def validate_task_title(title: str) -> bool:
-    """Validates that the title is a non-empty string."""
+    """Validates that title is a non-empty string."""
     if not isinstance(title, str) or not title.strip():
         raise ValueError("Task title cannot be empty.")
     return True
