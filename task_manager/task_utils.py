@@ -10,19 +10,12 @@ from .validation import (
 def add_task(
     tasks: list[dict], title: str, description: str, due_date: str
 ) -> bool:
-    is_valid_title, title_err = validate_task_title(title)
-    if not is_valid_title:
-        print(f"Validation Error: {title_err}")
-        return False
-
-    is_valid_desc, desc_err = validate_task_description(description)
-    if not is_valid_desc:
-        print(f"Validation Error: {desc_err}")
-        return False
-
-    is_valid_date, date_err = validate_due_date(due_date)
-    if not is_valid_date:
-        print(f"Validation Error: {date_err}")
+    try:
+        validate_task_title(title)
+        validate_task_description(description)
+        validate_due_date(due_date)
+    except ValueError as e:
+        print(f"Validation Error: {e}")
         return False
 
     task_id = len(tasks) + 1
