@@ -34,7 +34,7 @@ def add_task(
         "completed": False,
     }
     tasks.append(new_task)
-    print(f"Success: Added Task #{task_id} '{new_task['title']}'.")
+    print("Task added successfully!")
     return True
 
 
@@ -45,7 +45,7 @@ def mark_task_as_complete(tasks: list[dict], task_id: int) -> bool:
                 print(f"Notice: Task #{task_id} is already completed.")
                 return False
             task["completed"] = True
-            print(f"Success: Task #{task_id} marked as complete.")
+            print("Task marked as complete!")
             return True
 
     print(f"Error: Task ID #{task_id} not found.")
@@ -53,10 +53,9 @@ def mark_task_as_complete(tasks: list[dict], task_id: int) -> bool:
 
 
 def view_pending_tasks(tasks: list[dict]) -> list[dict]:
-    pending = [t for t in tasks if not t["completed"]]
-    print("\n--- PENDING TASKS ---")
+    pending = [t for t in tasks if not t.get("completed", False)]
     if not pending:
-        print("No pending tasks. Everything is done!")
+        print("No pending tasks.")
         return []
 
     for task in pending:
@@ -66,15 +65,9 @@ def view_pending_tasks(tasks: list[dict]) -> list[dict]:
 
 
 def calculate_progress(tasks: list[dict]) -> float:
-    print("\n--- PROGRESS REPORT ---")
     if not tasks:
-        print("No tasks available to track.")
         return 0.0
 
     total = len(tasks)
-    completed = sum(1 for t in tasks if t["completed"])
-    rate = (completed / total) * 100
-
-    print(f"Total: {total} | Completed: {completed} | Pending: {total - completed}")
-    print(f"Completion Rate: {rate:.1f}%")
-    return rate
+    completed = sum(1 for t in tasks if t.get("completed", False))
+    return (completed / total) * 100
