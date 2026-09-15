@@ -44,7 +44,8 @@ def main():
             view_pending_tasks(tasks)
 
         elif choice == "4":
-            calculate_progress(tasks)
+            progress = calculate_progress(tasks)
+            print(f"\nCompletion Progress: {progress:.1f}%")
 
         elif choice == "5":
             print("\nExiting Task Manager. Goodbye!")
